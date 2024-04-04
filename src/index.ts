@@ -5,6 +5,7 @@ import {
   aws_lambda as lambda,
   aws_logs as logs,
   custom_resources as cr,
+  Duration,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
@@ -39,6 +40,7 @@ export class RemoteOutputs extends Construct {
       runtime: lambda.Runtime.PYTHON_3_8,
       code: lambda.Code.fromAsset(path.join(__dirname, '../custom-resource-handler')),
       handler: 'remote-outputs.on_event',
+      timeout: Duration.minutes(1),
     });
 
     const myProvider = new cr.Provider(this, 'MyProvider', {
@@ -114,6 +116,7 @@ export class RemoteParameters extends Construct {
       runtime: lambda.Runtime.PYTHON_3_8,
       code: lambda.Code.fromAsset(path.join(__dirname, '../custom-resource-handler')),
       handler: 'remote-parameters.on_event',
+      timeout: Duration.minutes(1),
     });
 
     const myProvider = new cr.Provider(this, 'MyProvider', {
